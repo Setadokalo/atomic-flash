@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://xujgmx4x360e"]
+
+[ext_resource type="Script" uid="uid://bgqem235kvynf" path="res://misc/bomb.gd" id="1_dmm1i"]
+[ext_resource type="Texture2D" uid="uid://cm8l0wl17dw12" path="res://misc/explosion.png" id="2_dmm1i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fn8o"]
+size = Vector2(10, 10)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jte3d"]
+load_path = "res://.godot/imported/bomb.png-4d6af33b484ffa04291fc40341c77121.ctex"
+
+[sub_resource type="Animation" id="Animation_jte3d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bomb:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_dmm1i"]
+resource_name = "explodonate"
+length = 1.0000062
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Bomb:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0013086796, 0.12181401, 0.26489925, 0.3771931, 0.5055728, 0.5561857, 0.6186857, 0.6811857, 0.7436857, 0.8061857, 0.8686857, 0.9311857),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"detonate"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qlttw"]
+_data = {
+&"RESET": SubResource("Animation_jte3d"),
+&"explodonate": SubResource("Animation_dmm1i")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmm1i"]
+radius = 40.0
+
+[node name="Bomb" type="CharacterBody2D"]
+collision_layer = 8
+script = ExtResource("1_dmm1i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_4fn8o")
+
+[node name="Bomb" type="Sprite2D" parent="."]
+texture = SubResource("CompressedTexture2D_jte3d")
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qlttw")
+}
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 7
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+shape = SubResource("CircleShape2D_dmm1i")
+
+[node name="Explosion" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_dmm1i")
+
+[connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]

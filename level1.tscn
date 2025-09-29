@@ -1,0 +1,200 @@
+[gd_scene load_steps=17 format=3 uid="uid://d4ehcdjddvvlj"]
+
+[ext_resource type="Script" uid="uid://c4bvws0pvgep6" path="res://Game.gd" id="1_7sc4i"]
+[ext_resource type="Texture2D" uid="uid://c7qp1w3s2uxcy" path="res://world/background_3.png" id="1_hve3p"]
+[ext_resource type="Texture2D" uid="uid://dw3fxj0u1rcjh" path="res://world/background_2.png" id="2_mfdv2"]
+[ext_resource type="PackedScene" uid="uid://bdbpip0qujq7s" path="res://ui.tscn" id="2_n8vhr"]
+[ext_resource type="Texture2D" uid="uid://b2m67ncrbpavw" path="res://world/background_1.png" id="3_iotsf"]
+[ext_resource type="Script" uid="uid://dvgkesi2ufwhv" path="res://misc/CameraFollower.gd" id="5_215e1"]
+[ext_resource type="Texture2D" uid="uid://dw5a4yu6bkgdr" path="res://world/background_4.png" id="6_7sc4i"]
+[ext_resource type="PackedScene" uid="uid://dd6slf0we0yg8" path="res://characters/player.tscn" id="7_80cx4"]
+[ext_resource type="PackedScene" uid="uid://6bjjgu2swumr" path="res://world/building.tscn" id="7_vef74"]
+[ext_resource type="PackedScene" uid="uid://0uudc8w3ml5m" path="res://props/acid_jug.tscn" id="10_hve3p"]
+[ext_resource type="Script" uid="uid://1p37ljp8dqhk" path="res://checkpoint.gd" id="10_hx44q"]
+[ext_resource type="PackedScene" uid="uid://chpykjknkkd46" path="res://characters/Copter.tscn" id="11_mx85b"]
+[ext_resource type="PackedScene" uid="uid://ca42m50rkkvx6" path="res://characters/Bombthrower.tscn" id="14_215e1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8vhr"]
+size = Vector2(72, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqrsh"]
+size = Vector2(72, 90)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_7sc4i")
+time_to_complete = 45.99
+next_level = "res://level2.tscn"
+
+[node name="UI" parent="." instance=ExtResource("2_n8vhr")]
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -10
+
+[node name="Parallax2D" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background3" type="Sprite2D" parent="Background/Parallax2D"]
+position = Vector2(330, 124)
+texture = ExtResource("1_hve3p")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.6, 0.6)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background2" type="Sprite2D" parent="Background/Parallax2D2"]
+position = Vector2(330, 92)
+texture = ExtResource("2_mfdv2")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(-54, 72)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background1" type="Sprite2D" parent="Background/Parallax2D3"]
+position = Vector2(330, 64)
+texture = ExtResource("3_iotsf")
+
+[node name="Polygon2D" type="Polygon2D" parent="Background"]
+scale = Vector2(4, 4)
+color = Color(0.13333334, 0.14901961, 0.09411765, 1)
+polygon = PackedVector2Array(381.75, 21.5, -204.25, 24.25, -252, 252.5, 373.5, 319.75)
+
+[node name="DeathPlane" type="Area2D" parent="."]
+position = Vector2(0, 275)
+collision_mask = 57
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathPlane"]
+shape = SubResource("WorldBoundaryShape2D_ir8iy")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target", "death_plane")]
+z_index = 5
+position = Vector2(-309, 16)
+limit_left = -10000002
+limit_top = -10000003
+limit_right = 9999998
+limit_bottom = 237
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("5_215e1")
+target = NodePath("../Player")
+death_plane = NodePath("../DeathPlane")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="Camera2D"]
+z_index = -1000
+position = Vector2(0, -18)
+scale = Vector2(8, 8)
+texture = ExtResource("6_7sc4i")
+metadata/_edit_lock_ = true
+
+[node name="Buildings" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="GoalBuilding" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(18, -198)
+width = 12
+
+[node name="AcidJug" parent="Buildings/GoalBuilding" instance=ExtResource("10_hve3p")]
+position = Vector2(0, -126)
+
+[node name="Building" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-288, 72)
+
+[node name="Building2" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-144, -324)
+type = 3
+
+[node name="Building3" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-252, -18)
+width = 11
+type = 1
+
+[node name="Building4" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-414, -90)
+width = 7
+
+[node name="Building5" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-504, -36)
+width = 9
+
+[node name="Building6" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-684, -162)
+width = 13
+
+[node name="Building7" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-504, -216)
+width = 4
+
+[node name="Building8" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-792, -252)
+width = 4
+
+[node name="Building9" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-648, -324)
+width = 12
+
+[node name="Building12" parent="Buildings/Building9" instance=ExtResource("7_vef74")]
+position = Vector2(54, 54)
+width = 3
+type = 2
+
+[node name="Building10" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-342, -360)
+width = 17
+
+[node name="Building11" parent="Buildings" instance=ExtResource("7_vef74")]
+position = Vector2(-90, -306)
+width = 6
+type = 1
+
+[node name="Player" parent="." instance=ExtResource("7_80cx4")]
+position = Vector2(-288, 54)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Checkpoint2" type="Area2D" parent="Checkpoints"]
+position = Vector2(-792, -270)
+collision_mask = 16
+script = ExtResource("10_hx44q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint2"]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_n8vhr")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint3" type="Area2D" parent="Checkpoints"]
+position = Vector2(-504, -234)
+collision_mask = 16
+script = ExtResource("10_hx44q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint3"]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_eqrsh")
+metadata/_edit_lock_ = true
+
+[node name="Copter" parent="Checkpoints" instance=ExtResource("11_mx85b")]
+position = Vector2(-162, -90)
+
+[node name="Copter2" parent="Checkpoints" instance=ExtResource("11_mx85b")]
+position = Vector2(-666, -450)
+
+[node name="Bombthrower" parent="Checkpoints" instance=ExtResource("14_215e1")]
+position = Vector2(-522, -54)
+
+[node name="Bombthrower2" parent="Checkpoints" instance=ExtResource("14_215e1")]
+position = Vector2(-702, -180)
+
+[node name="Bombthrower3" parent="Checkpoints" instance=ExtResource("14_215e1")]
+position = Vector2(-666, -342)
+
+[connection signal="requested_next" from="UI" to="." method="_on_ui_requested_next"]
+[connection signal="requested_quit" from="UI" to="." method="_on_ui_requested_quit"]
+[connection signal="requested_retry" from="UI" to="." method="_on_ui_requested_retry"]
+[connection signal="body_entered" from="DeathPlane" to="Player" method="_on_death_plane_body_entered"]

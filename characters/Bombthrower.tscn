@@ -1,0 +1,143 @@
+[gd_scene load_steps=8 format=3 uid="uid://ca42m50rkkvx6"]
+
+[ext_resource type="Script" uid="uid://btcr0laedsrt1" path="res://characters/bombthrower.gd" id="1_db5lp"]
+[ext_resource type="Texture2D" uid="uid://d26qs2xq5be7k" path="res://characters/bombthrower.png" id="1_lyvg6"]
+
+[sub_resource type="Animation" id="Animation_h6uq7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_db5lp"]
+resource_name = "run"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_u7ssv"]
+resource_name = "throw_bomb"
+length = 2.000025
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25700322, 0.5, 0.7570032, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 4, 5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.9807327),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"run"],
+"method": &"play"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 1.9807327),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"throw_bomb"
+}, {
+"args": [0, 0],
+"method": &"set_bomber_states"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u7ssv"]
+_data = {
+&"RESET": SubResource("Animation_h6uq7"),
+&"run": SubResource("Animation_db5lp"),
+&"throw_bomb": SubResource("Animation_u7ssv")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lyvg6"]
+size = Vector2(14, 24)
+
+[node name="Bombthrower" type="CharacterBody2D" groups=["living"]]
+collision_layer = 10
+script = ExtResource("1_db5lp")
+throw_delay = 2.0
+movement_speed = 50.0
+health = 4
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("1_lyvg6")
+hframes = 7
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_u7ssv")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_lyvg6")
+metadata/_edit_lock_ = true
+
+[node name="ForwardFloor" type="RayCast2D" parent="."]
+position = Vector2(12, -1)
+target_position = Vector2(0, 7)
+
+[node name="ForwardWall" type="RayCast2D" parent="."]
+position = Vector2(12, -8)
+target_position = Vector2(7, 0)
+
+[node name="DamageBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageBox"]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_lyvg6")
+metadata/_edit_lock_ = true
+
+[node name="OnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -14)
+rect = Rect2(-35, -14, 70, 30)
+show_rect = false
+
+[connection signal="body_entered" from="DamageBox" to="." method="_on_damage_box_body_entered"]
+[connection signal="screen_entered" from="OnScreenNotifier2D" to="." method="_on_screen_entered"]

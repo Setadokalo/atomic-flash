@@ -1,0 +1,272 @@
+[gd_scene load_steps=14 format=3 uid="uid://14obah6yg1nd"]
+
+[ext_resource type="Script" uid="uid://c4bvws0pvgep6" path="res://Game.gd" id="1_dguho"]
+[ext_resource type="PackedScene" uid="uid://bdbpip0qujq7s" path="res://ui.tscn" id="2_p2trt"]
+[ext_resource type="Texture2D" uid="uid://c7qp1w3s2uxcy" path="res://world/background_3.png" id="3_n01hv"]
+[ext_resource type="Texture2D" uid="uid://dw3fxj0u1rcjh" path="res://world/background_2.png" id="4_7odde"]
+[ext_resource type="Texture2D" uid="uid://b2m67ncrbpavw" path="res://world/background_1.png" id="5_0bk12"]
+[ext_resource type="PackedScene" uid="uid://6bjjgu2swumr" path="res://world/building.tscn" id="6_13mid"]
+[ext_resource type="PackedScene" uid="uid://0uudc8w3ml5m" path="res://props/acid_jug.tscn" id="7_0buyf"]
+[ext_resource type="Script" uid="uid://dvgkesi2ufwhv" path="res://misc/CameraFollower.gd" id="9_x8n7k"]
+[ext_resource type="Texture2D" uid="uid://dw5a4yu6bkgdr" path="res://world/background_4.png" id="10_pbbpa"]
+[ext_resource type="PackedScene" uid="uid://dd6slf0we0yg8" path="res://characters/player.tscn" id="11_vy5se"]
+[ext_resource type="PackedScene" uid="uid://ca42m50rkkvx6" path="res://characters/Bombthrower.tscn" id="12_uggel"]
+[ext_resource type="PackedScene" uid="uid://chpykjknkkd46" path="res://characters/Copter.tscn" id="13_gvnba"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_dguho")
+next_level = "res://win.tscn"
+
+[node name="UI" parent="." instance=ExtResource("2_p2trt")]
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -5
+
+[node name="Parallax2D" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Sprite2D" parent="Background/Parallax2D"]
+position = Vector2(330, 124)
+texture = ExtResource("3_n01hv")
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.6, 0.6)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background2" type="Sprite2D" parent="Background/Parallax2D2"]
+position = Vector2(330, 92)
+texture = ExtResource("4_7odde")
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(-180, -72)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background1" type="Sprite2D" parent="Background/Parallax2D3"]
+position = Vector2(330, 64)
+texture = ExtResource("5_0bk12")
+metadata/_edit_lock_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Background"]
+position = Vector2(0, -29)
+scale = Vector2(4, 4)
+color = Color(0.13333334, 0.14901961, 0.09411765, 1)
+polygon = PackedVector2Array(381.75, 21.5, -204.25, 24.25, -252, 252.5, 373.5, 319.75)
+metadata/_edit_lock_ = true
+
+[node name="DeathPlane" type="Area2D" parent="."]
+position = Vector2(0, 275)
+collision_mask = 57
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathPlane"]
+shape = SubResource("WorldBoundaryShape2D_ir8iy")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target", "death_plane")]
+z_index = 5
+position = Vector2(-309, 16)
+limit_left = -10000002
+limit_top = -10000003
+limit_right = 9999998
+limit_bottom = 237
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("9_x8n7k")
+target = NodePath("../Player")
+death_plane = NodePath("../DeathPlane")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="Camera2D"]
+z_index = -1000
+position = Vector2(0, -18)
+scale = Vector2(8, 8)
+texture = ExtResource("10_pbbpa")
+metadata/_edit_lock_ = true
+
+[node name="Node2D" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Building2" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(72, -738)
+width = 12
+
+[node name="AcidJug" parent="Node2D/Building2" instance=ExtResource("7_0buyf")]
+position = Vector2(0, -126)
+
+[node name="Building3" parent="Node2D/Building2" instance=ExtResource("6_13mid")]
+position = Vector2(-18, 162)
+width = 6
+type = 2
+
+[node name="Building4" parent="Node2D/Building2" instance=ExtResource("6_13mid")]
+position = Vector2(-72, 234)
+width = 3
+type = 2
+
+[node name="Building" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(180, -684)
+width = 8
+
+[node name="Building3" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(144, -522)
+width = 8
+
+[node name="Building4" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-126, -792)
+width = 8
+
+[node name="Building5" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-252, -702)
+
+[node name="Building6" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-144, -612)
+width = 6
+
+[node name="Building7" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-360, -558)
+width = 8
+
+[node name="Building8" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-270, -468)
+width = 8
+
+[node name="Building9" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-108, -360)
+width = 8
+
+[node name="Building10" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(108, -450)
+width = 8
+
+[node name="Building17" parent="Node2D/Building10" instance=ExtResource("6_13mid")]
+position = Vector2(-18, 126)
+width = 4
+type = 2
+
+[node name="Building11" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-108, -522)
+width = 4
+
+[node name="Building12" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(270, -594)
+width = 4
+
+[node name="Building13" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-90, -450)
+type = 1
+
+[node name="Building14" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(270, -378)
+width = 12
+
+[node name="Building15" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(198, -252)
+width = 11
+type = 1
+
+[node name="Building16" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(306, -162)
+width = 11
+
+[node name="Building17" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(162, -90)
+width = 11
+
+[node name="Building18" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-180, -252)
+width = 11
+
+[node name="Building19" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-288, -126)
+width = 11
+
+[node name="Building22" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-360, -216)
+width = 6
+
+[node name="Building20" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-126, 0)
+width = 11
+
+[node name="Building21" parent="Node2D" instance=ExtResource("6_13mid")]
+position = Vector2(-72, -72)
+width = 5
+type = 1
+
+[node name="Player" parent="." instance=ExtResource("11_vy5se")]
+position = Vector2(-180, -18)
+
+[node name="Copter" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(198, -918)
+
+[node name="Copter2" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(-216, -864)
+
+[node name="Copter3" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(-468, -702)
+
+[node name="Copter4" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(360, -684)
+
+[node name="Copter5" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(-54, -594)
+
+[node name="Copter6" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(486, -324)
+
+[node name="Copter7" parent="." instance=ExtResource("13_gvnba")]
+position = Vector2(-288, -360)
+
+[node name="Bombthrower" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(-126, -378)
+throw_timer_offset = 0.75
+
+[node name="Bombthrower6" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(-252, -486)
+
+[node name="Bombthrower7" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(108, -468)
+throw_timer_offset = 0.9
+
+[node name="Bombthrower8" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(-252, -720)
+throw_timer_offset = 0.5
+
+[node name="Bombthrower9" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(198, -702)
+throw_timer_offset = 0.2
+
+[node name="Bombthrower10" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(270, -612)
+throw_timer_offset = 0.6
+
+[node name="Bombthrower2" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(234, -396)
+
+[node name="Bombthrower3" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(144, -540)
+throw_timer_offset = 0.3
+
+[node name="Bombthrower4" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(-342, -576)
+throw_timer_offset = 0.25
+
+[node name="Bombthrower5" parent="." instance=ExtResource("12_uggel")]
+position = Vector2(126, -108)
+throw_timer_offset = 0.4
+
+[connection signal="requested_next" from="UI" to="." method="_on_ui_requested_next"]
+[connection signal="requested_quit" from="UI" to="." method="_on_ui_requested_quit"]
+[connection signal="requested_retry" from="UI" to="." method="_on_ui_requested_retry"]
+[connection signal="body_entered" from="DeathPlane" to="Player" method="_on_death_plane_body_entered"]

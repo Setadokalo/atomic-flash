@@ -1,0 +1,214 @@
+[gd_scene load_steps=12 format=4 uid="uid://cf3u5r0frdbyr"]
+
+[ext_resource type="Script" uid="uid://clhujyidxypu2" path="res://winscreen.gd" id="1_4x0fk"]
+[ext_resource type="Texture2D" uid="uid://c7qp1w3s2uxcy" path="res://world/background_3.png" id="1_u4bre"]
+[ext_resource type="Texture2D" uid="uid://dw3fxj0u1rcjh" path="res://world/background_2.png" id="2_4x0fk"]
+[ext_resource type="Texture2D" uid="uid://b2m67ncrbpavw" path="res://world/background_1.png" id="3_8e1nn"]
+[ext_resource type="TileSet" uid="uid://cwj66g3rleinr" path="res://world/world.tres" id="4_uxvcs"]
+[ext_resource type="PackedScene" uid="uid://6bjjgu2swumr" path="res://world/building.tscn" id="5_8e1nn"]
+[ext_resource type="Texture2D" uid="uid://bqffnx3ldurcc" path="res://characters/main_character.png" id="5_d8ejm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_am31m"]
+bg_color = Color(0.6428275, 0.71771383, 0.44065267, 1)
+
+[sub_resource type="Animation" id="Animation_po0ld"]
+resource_name = "victory_dance"
+length = 12.000025
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 1.9954331, 2.2442808, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 4.9975915, 5.2267857, 5.481333, 5.7267857, 6, 6.25, 6.5, 6.75, 7, 7.25, 7.4974823, 7.75, 8, 8.25, 8.5, 8.75, 9, 9.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5, 11.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 5, 6, 5, 6, 5, 6, 2, 3, 4, 1, 2, 3, 4, 1, 0, 6, 0, 6, 0, 6, 0, 6, 5, 6, 5, 6, 5, 6, 5, 6, 2, 3, 4, 1, 2, 3, 4, 1, 0, 6, 0, 6, 0, 6, 0, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2.9995785, 4, 4.5, 5, 5.4767857, 6, 7, 9, 10, 10.5, 11, 11.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, false, true, false, true, true, false, true, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2, 3, 4, 8, 9, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(24, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-24, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wmsxl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vbxid"]
+_data = {
+&"RESET": SubResource("Animation_wmsxl"),
+&"victory_dance": SubResource("Animation_po0ld")
+}
+
+[node name="Win" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_am31m")
+script = ExtResource("1_4x0fk")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background3" type="Sprite2D" parent="Background/Parallax2D"]
+position = Vector2(330, 124)
+texture = ExtResource("1_u4bre")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.6, 0.6)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background2" type="Sprite2D" parent="Background/Parallax2D2"]
+position = Vector2(330, 92)
+texture = ExtResource("2_4x0fk")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(-54, 72)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+
+[node name="Background1" type="Sprite2D" parent="Background/Parallax2D3"]
+position = Vector2(330, 64)
+texture = ExtResource("3_8e1nn")
+
+[node name="Polygon2D" type="Polygon2D" parent="Background"]
+position = Vector2(0, 108)
+scale = Vector2(4, 4)
+color = Color(0.13333334, 0.14901961, 0.09411765, 1)
+polygon = PackedVector2Array(381.75, 21.5, -204.25, 24.25, -252, 252.5, 373.5, 319.75)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.5
+offset_top = 27.0
+offset_right = 40.5
+offset_bottom = 51.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+text = "You WIN!"
+
+[node name="Building" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(108, 72)
+width = 7
+
+[node name="Building6" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(-36, 144)
+width = 13
+
+[node name="Building2" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(468, 90)
+width = 9
+
+[node name="Building3" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(576, 144)
+width = 8
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(5, 0)
+tile_map_data = PackedByteArray("AAAKAAkAAAAEAAAAAAAYAAkAAAAHAAAAAAALAAkAAAAFAAAAAAAMAAkAAAAFAAAAAAANAAkAAAAFAAAAAAAOAAkAAAAFAAAAAAAPAAkAAAAFAAAAAAAQAAkAAAAFAAAAAAARAAkAAAAFAAAAAAASAAkAAAAFAAAAAAATAAkAAAAFAAAAAAAUAAkAAAAFAAAAAAAVAAkAAAAFAAAAAAAWAAkAAAAFAAAAAAAXAAkAAAAFAAAAAAAKAAoAAAAEAAEAAAAYAAoAAAAHAAEAAAAYAAsAAAAHAAEAAAAYAAwAAAAHAAEAAAAYAA0AAAAHAAEAAAAKAAsAAAAEAAEAAAAKAAwAAAAEAAEAAAAKAA0AAAAEAAEAAAALAAoAAAAFAAEAAAALAAsAAAAFAAEAAAALAAwAAAAFAAEAAAALAA0AAAAFAAEAAAAMAAoAAAAFAAEAAAAMAAsAAAAFAAEAAAAMAAwAAAAFAAEAAAAMAA0AAAAFAAEAAAANAAoAAAAFAAEAAAANAAsAAAAFAAEAAAANAAwAAAAFAAEAAAANAA0AAAAFAAEAAAAOAAoAAAAFAAEAAAAOAAsAAAAFAAEAAAAOAAwAAAAFAAEAAAAOAA0AAAAFAAEAAAAPAAoAAAAFAAEAAAAPAAsAAAAFAAEAAAAPAAwAAAAFAAEAAAAPAA0AAAAFAAEAAAAQAAoAAAAFAAEAAAAQAAsAAAAFAAEAAAAQAAwAAAAFAAEAAAAQAA0AAAAFAAEAAAARAAoAAAAFAAEAAAARAAsAAAAFAAEAAAARAAwAAAAFAAEAAAARAA0AAAAFAAEAAAASAAoAAAAFAAEAAAASAAsAAAAFAAEAAAASAAwAAAAFAAEAAAASAA0AAAAFAAEAAAATAAoAAAAFAAEAAAATAAsAAAAFAAEAAAATAAwAAAAFAAEAAAATAA0AAAAFAAEAAAAUAAoAAAAFAAEAAAAUAAsAAAAFAAEAAAAUAAwAAAAFAAEAAAAUAA0AAAAFAAEAAAAVAAoAAAAFAAEAAAAVAAsAAAAFAAEAAAAVAAwAAAAFAAEAAAAVAA0AAAAFAAEAAAAWAAoAAAAFAAEAAAAWAAsAAAAFAAEAAAAWAAwAAAAFAAEAAAAWAA0AAAAFAAEAAAAXAAoAAAAFAAEAAAAXAAsAAAAFAAEAAAAXAAwAAAAFAAEAAAAXAA0AAAAFAAEAAAALAA4AAAAFAAIAAAALAA8AAAAFAAIAAAALABAAAAAFAAIAAAALABEAAAAFAAIAAAAMAA4AAAAFAAIAAAAMAA8AAAAFAAIAAAAMABAAAAAFAAIAAAAMABEAAAAFAAIAAAANAA4AAAAFAAIAAAANAA8AAAAFAAIAAAANABAAAAAFAAIAAAANABEAAAAFAAIAAAAOAA4AAAAFAAIAAAAOAA8AAAAFAAIAAAAOABAAAAAFAAIAAAAOABEAAAAFAAIAAAAPAA4AAAAFAAIAAAAPAA8AAAAFAAIAAAAPABAAAAAFAAIAAAAPABEAAAAFAAIAAAAQAA4AAAAFAAIAAAAQAA8AAAAFAAIAAAAQABAAAAAFAAIAAAAQABEAAAAFAAIAAAARAA4AAAAFAAIAAAARAA8AAAAFAAIAAAARABAAAAAFAAIAAAARABEAAAAFAAIAAAASAA4AAAAFAAIAAAASAA8AAAAFAAIAAAASABAAAAAFAAIAAAASABEAAAAFAAIAAAATAA4AAAAFAAIAAAATAA8AAAAFAAIAAAATABAAAAAFAAIAAAATABEAAAAFAAIAAAAUAA4AAAAFAAIAAAAUAA8AAAAFAAIAAAAUABAAAAAFAAIAAAAUABEAAAAFAAIAAAAVAA4AAAAFAAIAAAAVAA8AAAAFAAIAAAAVABAAAAAFAAIAAAAVABEAAAAFAAIAAAAWAA4AAAAFAAIAAAAWAA8AAAAFAAIAAAAWABAAAAAFAAIAAAAWABEAAAAFAAIAAAAXAA4AAAAFAAIAAAAXAA8AAAAFAAIAAAAXABAAAAAFAAIAAAAXABEAAAAFAAIAAAAKAA4AAAAEAAIAAAAKAA8AAAAEAAIAAAAKABAAAAAEAAIAAAAKABEAAAAEAAIAAAAYAA4AAAAHAAIAAAAYAA8AAAAHAAIAAAAYABAAAAAHAAIAAAAYABEAAAAHAAIAAAAKABIAAAAEAAMAAAAKABMAAAAEAAMAAAAKABQAAAAEAAMAAAAKABUAAAAEAAMAAAAYABIAAAAHAAMAAAAYABMAAAAHAAMAAAAYABQAAAAHAAMAAAAYABUAAAAHAAMAAAALABIAAAAFAAMAAAALABMAAAAFAAMAAAALABQAAAAFAAMAAAALABUAAAAFAAMAAAAMABIAAAAFAAMAAAAMABMAAAAFAAMAAAAMABQAAAAFAAMAAAAMABUAAAAFAAMAAAANABIAAAAFAAMAAAANABMAAAAFAAMAAAANABQAAAAFAAMAAAANABUAAAAFAAMAAAAOABIAAAAFAAMAAAAOABMAAAAFAAMAAAAOABQAAAAFAAMAAAAOABUAAAAFAAMAAAAPABIAAAAFAAMAAAAPABMAAAAFAAMAAAAPABQAAAAFAAMAAAAPABUAAAAFAAMAAAAQABIAAAAFAAMAAAAQABMAAAAFAAMAAAAQABQAAAAFAAMAAAAQABUAAAAFAAMAAAARABIAAAAFAAMAAAARABMAAAAFAAMAAAARABQAAAAFAAMAAAARABUAAAAFAAMAAAASABIAAAAFAAMAAAASABMAAAAFAAMAAAASABQAAAAFAAMAAAASABUAAAAFAAMAAAATABIAAAAFAAMAAAATABMAAAAFAAMAAAATABQAAAAFAAMAAAATABUAAAAFAAMAAAAUABIAAAAFAAMAAAAUABMAAAAFAAMAAAAUABQAAAAFAAMAAAAUABUAAAAFAAMAAAAVABIAAAAFAAMAAAAVABMAAAAFAAMAAAAVABQAAAAFAAMAAAAVABUAAAAFAAMAAAAWABIAAAAFAAMAAAAWABMAAAAFAAMAAAAWABQAAAAFAAMAAAAWABUAAAAFAAMAAAAXABIAAAAFAAMAAAAXABMAAAAFAAMAAAAXABQAAAAFAAMAAAAXABUAAAAFAAMAAAA=")
+tile_set = ExtResource("4_uxvcs")
+
+[node name="Building4" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(468, 270)
+width = 8
+
+[node name="Building5" parent="." instance=ExtResource("5_8e1nn")]
+position = Vector2(180, 306)
+width = 13
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(320, 157)
+texture = ExtResource("5_d8ejm")
+hframes = 7
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_vbxid")
+}
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = 16.0
+offset_right = 44.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+text = " Restart "
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]

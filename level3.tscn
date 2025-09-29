@@ -1,0 +1,287 @@
+[gd_scene load_steps=19 format=3 uid="uid://y526jdklr0x6"]
+
+[ext_resource type="Script" uid="uid://c4bvws0pvgep6" path="res://Game.gd" id="1_ymh28"]
+[ext_resource type="Texture2D" uid="uid://c7qp1w3s2uxcy" path="res://world/background_3.png" id="2_7oc4e"]
+[ext_resource type="PackedScene" uid="uid://bdbpip0qujq7s" path="res://ui.tscn" id="2_siwpi"]
+[ext_resource type="Texture2D" uid="uid://dw3fxj0u1rcjh" path="res://world/background_2.png" id="3_siwpi"]
+[ext_resource type="Texture2D" uid="uid://b2m67ncrbpavw" path="res://world/background_1.png" id="4_0m7xm"]
+[ext_resource type="Script" uid="uid://dvgkesi2ufwhv" path="res://misc/CameraFollower.gd" id="5_qoi87"]
+[ext_resource type="Texture2D" uid="uid://dw5a4yu6bkgdr" path="res://world/background_4.png" id="6_i6w5t"]
+[ext_resource type="PackedScene" uid="uid://6bjjgu2swumr" path="res://world/building.tscn" id="7_l2pgs"]
+[ext_resource type="PackedScene" uid="uid://0uudc8w3ml5m" path="res://props/acid_jug.tscn" id="8_2272n"]
+[ext_resource type="PackedScene" uid="uid://dd6slf0we0yg8" path="res://characters/player.tscn" id="9_bs5pn"]
+[ext_resource type="Script" uid="uid://1p37ljp8dqhk" path="res://checkpoint.gd" id="10_ci4mn"]
+[ext_resource type="PackedScene" uid="uid://ca42m50rkkvx6" path="res://characters/Bombthrower.tscn" id="11_gaofk"]
+[ext_resource type="PackedScene" uid="uid://chpykjknkkd46" path="res://characters/Copter.tscn" id="12_itrrf"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7oc4e"]
+size = Vector2(180, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_siwpi"]
+size = Vector2(53, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m7xm"]
+size = Vector2(72, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qoi87"]
+size = Vector2(54, 90)
+
+[node name="world" type="Node2D"]
+script = ExtResource("1_ymh28")
+time_to_complete = 45.99
+next_level = "res://level4.tscn"
+
+[node name="UI" parent="." instance=ExtResource("2_siwpi")]
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -5
+
+[node name="Parallax2D" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Sprite2D" parent="Background/Parallax2D"]
+position = Vector2(330, 124)
+texture = ExtResource("2_7oc4e")
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.6, 0.6)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background2" type="Sprite2D" parent="Background/Parallax2D2"]
+position = Vector2(330, 92)
+texture = ExtResource("3_siwpi")
+metadata/_edit_lock_ = true
+
+[node name="Parallax2D3" type="Parallax2D" parent="Background"]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(-180, -72)
+repeat_size = Vector2(208, 0)
+repeat_times = 4
+metadata/_edit_lock_ = true
+
+[node name="Background1" type="Sprite2D" parent="Background/Parallax2D3"]
+position = Vector2(330, 64)
+texture = ExtResource("4_0m7xm")
+metadata/_edit_lock_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="Background"]
+position = Vector2(0, -29)
+scale = Vector2(4, 4)
+color = Color(0.13333334, 0.14901961, 0.09411765, 1)
+polygon = PackedVector2Array(381.75, 21.5, -204.25, 24.25, -252, 252.5, 373.5, 319.75)
+metadata/_edit_lock_ = true
+
+[node name="Node2D" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Building2" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(972, -540)
+width = 12
+
+[node name="AcidJug" parent="Node2D/Building2" instance=ExtResource("8_2272n")]
+position = Vector2(0, -126)
+
+[node name="Building10" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(828, -450)
+
+[node name="Building11" parent="Node2D/Building10" instance=ExtResource("7_l2pgs")]
+position = Vector2(-36, 72)
+width = 6
+type = 2
+
+[node name="Building12" parent="Node2D/Building10" instance=ExtResource("7_l2pgs")]
+position = Vector2(0, 180)
+width = 3
+type = 2
+
+[node name="Building13" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(1152, -486)
+width = 7
+
+[node name="Building11" parent="Node2D/Building13" instance=ExtResource("7_l2pgs")]
+position = Vector2(36, 108)
+width = 4
+type = 2
+
+[node name="Building9" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(612, -342)
+width = 3
+type = 1
+
+[node name="Building6" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(594, -252)
+width = 6
+
+[node name="Building7" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(774, -198)
+width = 12
+
+[node name="Building8" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(1044, -306)
+width = 12
+
+[node name="Building5" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(486, -162)
+
+[node name="Building11" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(468, -72)
+width = 7
+type = 1
+
+[node name="Building4" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(648, -72)
+
+[node name="Building3" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(324, -18)
+width = 20
+
+[node name="Building15" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(234, -108)
+width = 11
+type = 1
+
+[node name="Building16" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(540, 18)
+width = 11
+
+[node name="Building" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(-72, 0)
+width = 16
+
+[node name="Building12" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(162, 36)
+width = 14
+
+[node name="Building14" parent="Node2D" instance=ExtResource("7_l2pgs")]
+position = Vector2(918, -90)
+width = 12
+
+[node name="DeathPlane" type="Area2D" parent="."]
+position = Vector2(0, 275)
+collision_mask = 57
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathPlane"]
+shape = SubResource("WorldBoundaryShape2D_ir8iy")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint2" type="Area2D" parent="."]
+position = Vector2(486, -180)
+collision_mask = 16
+script = ExtResource("10_ci4mn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
+position = Vector2(0, -44)
+shape = SubResource("RectangleShape2D_7oc4e")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint3" type="Area2D" parent="."]
+position = Vector2(828, -288)
+collision_mask = 16
+script = ExtResource("10_ci4mn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint3"]
+position = Vector2(9, -44)
+shape = SubResource("RectangleShape2D_siwpi")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint4" type="Area2D" parent="."]
+position = Vector2(1188, -396)
+collision_mask = 16
+script = ExtResource("10_ci4mn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint4"]
+position = Vector2(0, -44)
+shape = SubResource("RectangleShape2D_0m7xm")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint" type="Area2D" parent="."]
+position = Vector2(612, -342)
+collision_mask = 16
+script = ExtResource("10_ci4mn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint"]
+position = Vector2(9, -45)
+shape = SubResource("RectangleShape2D_qoi87")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target", "death_plane")]
+z_index = 5
+position = Vector2(-309, 16)
+limit_left = -10000002
+limit_top = -10000003
+limit_right = 9999998
+limit_bottom = 237
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("5_qoi87")
+target = NodePath("../Player")
+death_plane = NodePath("../DeathPlane")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="Camera2D"]
+z_index = -1000
+position = Vector2(0, -18)
+scale = Vector2(8, 8)
+texture = ExtResource("6_i6w5t")
+metadata/_edit_lock_ = true
+
+[node name="Player" parent="." instance=ExtResource("9_bs5pn")]
+position = Vector2(-180, -18)
+
+[node name="Bombthrower" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(486, -72)
+throw_timer_offset = 0.8
+
+[node name="Bombthrower2" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(396, -36)
+throw_timer_offset = 0.3
+
+[node name="Bombthrower3" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(666, -90)
+throw_timer_offset = 0.7
+
+[node name="Bombthrower4" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(594, -90)
+throw_timer_offset = 1.4
+
+[node name="Bombthrower6" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(738, -216)
+throw_timer_offset = 1.2
+
+[node name="Bombthrower5" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(522, -180)
+throw_timer_offset = 0.1
+
+[node name="Bombthrower7" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(1008, -324)
+throw_timer_offset = 0.5
+
+[node name="Bombthrower8" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(828, -396)
+throw_timer_offset = 0.1
+
+[node name="Bombthrower9" parent="." instance=ExtResource("11_gaofk")]
+position = Vector2(828, -468)
+throw_timer_offset = 0.4
+
+[node name="Copter" parent="." instance=ExtResource("12_itrrf")]
+position = Vector2(486, -90)
+
+[node name="Copter2" parent="." instance=ExtResource("12_itrrf")]
+position = Vector2(324, -270)
+
+[node name="Copter3" parent="." instance=ExtResource("12_itrrf")]
+position = Vector2(954, -270)
+
+[connection signal="requested_next" from="UI" to="." method="_on_ui_requested_next"]
+[connection signal="requested_quit" from="UI" to="." method="_on_ui_requested_quit"]
+[connection signal="requested_retry" from="UI" to="." method="_on_ui_requested_retry"]
+[connection signal="body_entered" from="DeathPlane" to="Player" method="_on_death_plane_body_entered"]

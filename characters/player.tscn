@@ -1,0 +1,332 @@
+[gd_scene load_steps=27 format=3 uid="uid://dd6slf0we0yg8"]
+
+[ext_resource type="Script" uid="uid://drh0eiat3lj68" path="res://characters/Player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://bqffnx3ldurcc" path="res://characters/main_character.png" id="2_i3pqv"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3eadt"]
+animation = &"hitstun"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tory2"]
+animation = &"RunLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x0jl3"]
+animation = &"RunRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_evndh"]
+animation = &"Idle_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h1q25"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j31ep"]
+animation = &"LookUp"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6t23p"]
+animation = &"LookUp_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8jd0"]
+animation = &"RunLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q605b"]
+animation = &"RunRight"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_n8jd0"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tory2")
+blend_point_0/pos = Vector2(-0.79999995, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_x0jl3")
+blend_point_1/pos = Vector2(0.79999995, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_evndh")
+blend_point_2/pos = Vector2(-0.02, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_h1q25")
+blend_point_3/pos = Vector2(0.02, 0)
+blend_point_4/node = SubResource("AnimationNodeAnimation_j31ep")
+blend_point_4/pos = Vector2(0.02, 1)
+blend_point_5/node = SubResource("AnimationNodeAnimation_6t23p")
+blend_point_5/pos = Vector2(-0.02, 1)
+blend_point_6/node = SubResource("AnimationNodeAnimation_n8jd0")
+blend_point_6/pos = Vector2(-0.64, 0.6)
+blend_point_7/node = SubResource("AnimationNodeAnimation_q605b")
+blend_point_7/pos = Vector2(0.64, 0.6)
+snap = Vector2(0.02, 0.1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3eadt"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tory2"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_x0jl3"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_nr8wp"]
+states/hitstun/node = SubResource("AnimationNodeAnimation_3eadt")
+states/hitstun/position = Vector2(646, 187)
+states/normal/node = SubResource("AnimationNodeBlendSpace2D_n8jd0")
+states/normal/position = Vector2(613, 16)
+transitions = ["Start", "normal", SubResource("AnimationNodeStateMachineTransition_3eadt"), "normal", "hitstun", SubResource("AnimationNodeStateMachineTransition_tory2"), "hitstun", "normal", SubResource("AnimationNodeStateMachineTransition_x0jl3")]
+
+[sub_resource type="Animation" id="Animation_d2bti"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ir8iy"]
+resource_name = "Idle_Left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tory2"]
+resource_name = "LookUp"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_x0jl3"]
+resource_name = "LookUp_Left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ta5nu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_k73cj"]
+resource_name = "RunLeft"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_flf07"]
+resource_name = "RunRight"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainCharacter:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_3eadt"]
+resource_name = "hitstun"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainCharacter:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rjqkl"]
+_data = {
+&"Idle": SubResource("Animation_d2bti"),
+&"Idle_Left": SubResource("Animation_ir8iy"),
+&"LookUp": SubResource("Animation_tory2"),
+&"LookUp_Left": SubResource("Animation_x0jl3"),
+&"RESET": SubResource("Animation_ta5nu"),
+&"RunLeft": SubResource("Animation_k73cj"),
+&"RunRight": SubResource("Animation_flf07"),
+&"hitstun": SubResource("Animation_3eadt")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fs4d3"]
+size = Vector2(12, 24)
+
+[node name="Player" type="CharacterBody2D" groups=["living"]]
+collision_layer = 20
+collision_mask = 257
+script = ExtResource("1_onrkg")
+movement_speed = 150.0
+allow_player_damage = false
+health = 2
+post_hit_invulnerability = 1.0
+
+[node name="MainCharacter" type="Sprite2D" parent="."]
+clip_children = 2
+position = Vector2(0, -13)
+texture = ExtResource("2_i3pqv")
+flip_h = true
+hframes = 7
+metadata/_edit_lock_ = true
+
+[node name="Iframes" type="Polygon2D" parent="MainCharacter"]
+position = Vector2(0, 13)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-36, -54, 36, -54, 36, 36, -36, 36)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_nr8wp")
+anim_player = NodePath("../AnimationPlayer")
+parameters/normal/blend_position = Vector2(0.024140477, -0.059999943)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rjqkl")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_fs4d3")
+metadata/_edit_lock_ = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]

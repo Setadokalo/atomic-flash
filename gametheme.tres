@@ -1,0 +1,39 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c3opdhieajp1p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_raubo"]
+bg_color = Color(0.97717863, 0.98066574, 7.70092e-07, 0.23529412)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72400194, 0.70152926, 0.4921385, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lxbtk"]
+bg_color = Color(0.4553644, 0.50754493, 0.26611063, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72400194, 0.70152926, 0.4921385, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rvswv"]
+bg_color = Color(0.26188177, 0.31484598, 0.0879428, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72400194, 0.70152926, 0.4921385, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pxw1s"]
+bg_color = Color(0.105858065, 0.13168278, 0.020155702, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.72400194, 0.70152926, 0.4921385, 1)
+
+[resource]
+Button/styles/focus = SubResource("StyleBoxFlat_raubo")
+Button/styles/hover = SubResource("StyleBoxFlat_lxbtk")
+Button/styles/normal = SubResource("StyleBoxFlat_rvswv")
+Button/styles/pressed = SubResource("StyleBoxFlat_pxw1s")

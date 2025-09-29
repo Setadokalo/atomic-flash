@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://0uudc8w3ml5m"]
+
+[ext_resource type="Script" uid="uid://bqst38swqttf5" path="res://props/acid_jug.gd" id="1_ne1v8"]
+[ext_resource type="Shader" uid="uid://ccbq15m5utj6h" path="res://props/bubbly_liquid.gdshader" id="2_363s7"]
+[ext_resource type="Texture2D" uid="uid://c1ujid0am4vm4" path="res://props/acid_bubbly.png" id="3_mhbg7"]
+[ext_resource type="Texture2D" uid="uid://c0kuykgowlnus" path="res://props/bigbad_machine.png" id="4_m6mmi"]
+[ext_resource type="Script" uid="uid://dsk4c5acet07x" path="res://jug_collider.gd" id="5_gu7m3"]
+[ext_resource type="Texture2D" uid="uid://cm8l0wl17dw12" path="res://misc/explosion.png" id="6_7mjli"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0ka3"]
+shader = ExtResource("2_363s7")
+shader_parameter/bubbly_liquid = ExtResource("3_mhbg7")
+shader_parameter/cutout_color = Color(1, 0, 0.9843137, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ir8iy"]
+size = Vector2(128, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sc4i"]
+size = Vector2(82, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80cx4"]
+size = Vector2(56, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e8heu"]
+size = Vector2(34, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rvswv"]
+size = Vector2(36, 38)
+
+[node name="AcidJug" type="StaticBody2D"]
+collision_layer = 129
+collision_mask = 25
+script = ExtResource("1_ne1v8")
+hit_points = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_x0ka3")
+position = Vector2(0, 4)
+texture = ExtResource("4_m6mmi")
+hframes = 4
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 63)
+shape = SubResource("RectangleShape2D_ir8iy")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_7sc4i")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, -54)
+shape = SubResource("RectangleShape2D_80cx4")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(0, -78)
+shape = SubResource("RectangleShape2D_e8heu")
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 3
+collision_mask = 57
+script = ExtResource("5_gu7m3")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, -19)
+shape = SubResource("RectangleShape2D_rvswv")
+metadata/_edit_lock_ = true
+
+[node name="ExplosionGroup" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -40)
+
+[node name="Explosion" type="Sprite2D" parent="ExplosionGroup"]
+position = Vector2(-22, -24)
+texture = ExtResource("6_7mjli")
+
+[node name="Explosion3" type="Sprite2D" parent="ExplosionGroup"]
+position = Vector2(-5, 36)
+rotation = -3.1415925
+texture = ExtResource("6_7mjli")
+
+[node name="Explosion2" type="Sprite2D" parent="ExplosionGroup"]
+position = Vector2(31, -11)
+rotation = 1.5707964
+texture = ExtResource("6_7mjli")
