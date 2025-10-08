@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d4ehcdjddvvlj"]
+[gd_scene load_steps=22 format=3 uid="uid://d4ehcdjddvvlj"]
 
 [ext_resource type="Script" uid="uid://c4bvws0pvgep6" path="res://Game.gd" id="1_7sc4i"]
 [ext_resource type="Texture2D" uid="uid://c7qp1w3s2uxcy" path="res://world/background_3.png" id="1_hve3p"]
@@ -16,10 +16,29 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8vhr"]
-size = Vector2(72, 90)
+[sub_resource type="CircleShape2D" id="CircleShape2D_eqrsh"]
+radius = 108.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n8vhr"]
+radius = 36.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_3l65w"]
+radius = 36.0
+height = 72.0
+radial_segments = 4
+rings = 16
+
+[sub_resource type="Gradient" id="Gradient_rjtee"]
+offsets = PackedFloat32Array(0, 0.499, 0.501, 1)
+colors = PackedColorArray(0.65430915, 1, 0.3681497, 1, 0.40392157, 0.4392157, 0.16078432, 1, 0.11317896, 0.17422637, 0.010685002, 1, 0.4036298, 0.4377616, 0.16268972, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1idop"]
+gradient = SubResource("Gradient_rjtee")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqrsh"]
+size = Vector2(72, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3l65w"]
 size = Vector2(72, 90)
 
 [node name="World" type="Node2D"]
@@ -154,6 +173,29 @@ position = Vector2(-90, -306)
 width = 6
 type = 1
 
+[node name="GravitySphere" type="StaticBody2D" parent="."]
+position = Vector2(-234, -162)
+metadata/_edit_lock_ = true
+
+[node name="GravityAOE" type="Area2D" parent="GravitySphere"]
+collision_mask = 57
+gravity_space_override = 3
+gravity_point = true
+gravity_point_center = Vector2(0, 0)
+gravity_direction = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravitySphere/GravityAOE"]
+shape = SubResource("CircleShape2D_eqrsh")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravitySphere"]
+shape = SubResource("CircleShape2D_n8vhr")
+metadata/_edit_lock_ = true
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="GravitySphere"]
+mesh = SubResource("SphereMesh_3l65w")
+texture = SubResource("GradientTexture2D_1idop")
+
 [node name="Player" parent="." instance=ExtResource("7_80cx4")]
 position = Vector2(-288, 54)
 
@@ -166,7 +208,7 @@ script = ExtResource("10_hx44q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint2"]
 position = Vector2(0, -45)
-shape = SubResource("RectangleShape2D_n8vhr")
+shape = SubResource("RectangleShape2D_eqrsh")
 metadata/_edit_lock_ = true
 
 [node name="Checkpoint3" type="Area2D" parent="Checkpoints"]
@@ -176,7 +218,7 @@ script = ExtResource("10_hx44q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint3"]
 position = Vector2(0, -45)
-shape = SubResource("RectangleShape2D_eqrsh")
+shape = SubResource("RectangleShape2D_3l65w")
 metadata/_edit_lock_ = true
 
 [node name="Copter" parent="Checkpoints" instance=ExtResource("11_mx85b")]

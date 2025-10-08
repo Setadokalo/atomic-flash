@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdbpip0qujq7s"]
+[gd_scene load_steps=5 format=3 uid="uid://bdbpip0qujq7s"]
 
 [ext_resource type="Script" uid="uid://cogcmrafj7ejj" path="res://ui.gd" id="1_fyqef"]
+[ext_resource type="Script" uid="uid://btnx7mb7js6d8" path="res://pause_menu.gd" id="2_m6e0p"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rvswv"]
 content_margin_left = 8.0
 content_margin_right = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fyqef"]
+bg_color = Color(0.03127333, 0.04, 0.0092, 0.4509804)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_fyqef")
@@ -48,6 +52,7 @@ STOP THE APOCALYPSE"
 horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0
+visible_characters_behavior = 1
 visible_ratio = 0.0
 
 [node name="GameOverButtonClip" type="Control" parent="VBoxContainer"]
@@ -65,6 +70,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RetryButton" type="Button" parent="VBoxContainer/GameOverButtonClip/GameOverButtonBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Retry"
@@ -77,6 +83,7 @@ size_flags_horizontal = 3
 text = "Next"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer/GameOverButtonClip/GameOverButtonBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Quit"
@@ -94,6 +101,61 @@ grow_horizontal = 2
 theme_override_constants/outline_size = 8
 text = "hold r to restart if stuck"
 
+[node name="PauseMenu" type="Panel" parent="."]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fyqef")
+script = ExtResource("2_m6e0p")
+
+[node name="Label" type="Label" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.5
+offset_top = -126.0
+offset_right = 64.5
+offset_bottom = -102.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Paused"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -46.0
+offset_right = 58.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="CONTINUE" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "  CONTINUE  "
+
+[node name="RESTART" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "RESTART"
+
+[node name="QUIT" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
 [connection signal="pressed" from="VBoxContainer/GameOverButtonClip/GameOverButtonBox/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/GameOverButtonClip/GameOverButtonBox/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/GameOverButtonClip/GameOverButtonBox/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/CONTINUE" to="PauseMenu" method="_on_continue_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/RESTART" to="PauseMenu" method="_on_restart_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/QUIT" to="PauseMenu" method="_on_quit_pressed"]

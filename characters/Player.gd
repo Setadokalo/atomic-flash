@@ -26,7 +26,8 @@ func _ready() -> void:
 	#if event.is_action_pressed("testing_toggle_slow"):
 		#Engine.physics_ticks_per_second = 6 if Engine.physics_ticks_per_second == 60 else 60
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	super._process(delta)
 	if _invulnerability > 0.0:
 		$MainCharacter/Iframes.visible = true
 		$MainCharacter/Iframes.color.a = 0.25 if int(_invulnerability * 4.0) % 2 == 0 else 0.5
@@ -36,12 +37,12 @@ func _process(_delta: float) -> void:
 	if abs(get_desired_movement().x) > 0.1:
 		$AnimationTree.set("parameters/normal/blend_position", 
 			Input.get_vector("move_left", "move_right", "look_down", "look_up"))
-	elif abs(velocity.x) < 10.0:
+	elif abs(velocity.rotated(-rotation).x) < 10.0:
 		$AnimationTree.set("parameters/normal/blend_position",
 			Vector2(-0.01 if  $MainCharacter.flip_h else 0.01, Input.get_axis("look_down", "look_up")))
 	else:
 		$AnimationTree.set("parameters/normal/blend_position",
-			Vector2(velocity.x / 100.0, Input.get_axis("look_down", "look_up")))
+			Vector2(velocity.rotated(-rotation).x / 100.0, Input.get_axis("look_down", "look_up")))
 	#if not is_on_floor():
 		#modulate = Color(1.0, 0.0, 0.0)
 	#else:
@@ -56,10 +57,10 @@ func _physics_process(delta: float) -> void:
 		return
 	if state == State.NORMAL and Input.is_action_just_pressed("fire_primary") and _gun_cooldown <= 0.0:
 		var bullet: Bullet = BULLET.instantiate()
-		bullet.rotation = Vector2(1.0 if not $MainCharacter.flip_h else -1.0, Input.get_axis("look_up", "look_down")).angle()
+		bullet.rotation = rotation + Vector2(1.0 if not $MainCharacter.flip_h else -1.0, Input.get_axis("look_up", "look_down")).angle()
 		bullet.source = self
 		get_parent().add_child(bullet)
-		bullet.global_position = global_position - Vector2(0.0, 13.0)
+		bullet.global_position = global_position - Vector2(0.0, 13.0).rotated(rotation)
 		_gun_cooldown = gun_cooldown
 
 func _on_death_plane_body_entered(body: Node2D) -> void:
@@ -87,7 +88,7 @@ func die(offscreen := false) -> void:
 	state = State.DYING
 	animation.travel("hitstun")
 	if Globals.state == Globals.GameState.ACTIVE:
-		if not validate_spawnpoint(respawn_position):
+		if not validate_spawnpoint(respawn_position) or Input.is_action_pressed("force_lose"):
 			Globals.change_state(Globals.GameState.LOSE)
 		else:
 			var death_tween := create_tween()

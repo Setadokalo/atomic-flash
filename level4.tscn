@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://14obah6yg1nd"]
+[gd_scene load_steps=17 format=3 uid="uid://14obah6yg1nd"]
 
 [ext_resource type="Script" uid="uid://c4bvws0pvgep6" path="res://Game.gd" id="1_dguho"]
 [ext_resource type="PackedScene" uid="uid://bdbpip0qujq7s" path="res://ui.tscn" id="2_p2trt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b2m67ncrbpavw" path="res://world/background_1.png" id="5_0bk12"]
 [ext_resource type="PackedScene" uid="uid://6bjjgu2swumr" path="res://world/building.tscn" id="6_13mid"]
 [ext_resource type="PackedScene" uid="uid://0uudc8w3ml5m" path="res://props/acid_jug.tscn" id="7_0buyf"]
+[ext_resource type="Script" uid="uid://1p37ljp8dqhk" path="res://checkpoint.gd" id="8_d0b6t"]
 [ext_resource type="Script" uid="uid://dvgkesi2ufwhv" path="res://misc/CameraFollower.gd" id="9_x8n7k"]
 [ext_resource type="Texture2D" uid="uid://dw5a4yu6bkgdr" path="res://world/background_4.png" id="10_pbbpa"]
 [ext_resource type="PackedScene" uid="uid://dd6slf0we0yg8" path="res://characters/player.tscn" id="11_vy5se"]
@@ -14,6 +15,12 @@
 [ext_resource type="PackedScene" uid="uid://chpykjknkkd46" path="res://characters/Copter.tscn" id="13_gvnba"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dguho"]
+size = Vector2(180, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2trt"]
+size = Vector2(216, 90)
 
 [node name="world" type="Node2D"]
 script = ExtResource("1_dguho")
@@ -252,7 +259,7 @@ position = Vector2(270, -612)
 throw_timer_offset = 0.6
 
 [node name="Bombthrower2" parent="." instance=ExtResource("12_uggel")]
-position = Vector2(234, -396)
+position = Vector2(216, -252)
 
 [node name="Bombthrower3" parent="." instance=ExtResource("12_uggel")]
 position = Vector2(144, -540)
@@ -265,6 +272,28 @@ throw_timer_offset = 0.25
 [node name="Bombthrower5" parent="." instance=ExtResource("12_uggel")]
 position = Vector2(126, -108)
 throw_timer_offset = 0.4
+
+[node name="Checkpoint2" type="Area2D" parent="."]
+position = Vector2(-90, -450)
+collision_mask = 16
+script = ExtResource("8_d0b6t")
+checkpoint_width = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_dguho")
+metadata/_edit_lock_ = true
+
+[node name="Checkpoint3" type="Area2D" parent="."]
+position = Vector2(270, -396)
+collision_mask = 16
+script = ExtResource("8_d0b6t")
+checkpoint_width = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint3"]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_p2trt")
+metadata/_edit_lock_ = true
 
 [connection signal="requested_next" from="UI" to="." method="_on_ui_requested_next"]
 [connection signal="requested_quit" from="UI" to="." method="_on_ui_requested_quit"]

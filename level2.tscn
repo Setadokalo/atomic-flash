@@ -16,13 +16,13 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ir8iy"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hve3p"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s8oj7"]
 size = Vector2(181, 90)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mfdv2"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mw4xc"]
 size = Vector2(234, 90)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iotsf"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r8rrl"]
 size = Vector2(53, 90)
 
 [node name="World" type="Node2D"]
@@ -181,7 +181,7 @@ script = ExtResource("10_s8oj7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint"]
 position = Vector2(0, -44)
-shape = SubResource("RectangleShape2D_hve3p")
+shape = SubResource("RectangleShape2D_s8oj7")
 metadata/_edit_lock_ = true
 
 [node name="Checkpoint2" type="Area2D" parent="."]
@@ -191,7 +191,7 @@ script = ExtResource("10_s8oj7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint2"]
 position = Vector2(9, -44)
-shape = SubResource("RectangleShape2D_mfdv2")
+shape = SubResource("RectangleShape2D_mw4xc")
 metadata/_edit_lock_ = true
 
 [node name="Checkpoint3" type="Area2D" parent="."]
@@ -201,7 +201,7 @@ script = ExtResource("10_s8oj7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoint3"]
 position = Vector2(9, -44)
-shape = SubResource("RectangleShape2D_iotsf")
+shape = SubResource("RectangleShape2D_r8rrl")
 metadata/_edit_lock_ = true
 
 [node name="Building12" parent="." instance=ExtResource("7_lwvnx")]
@@ -260,7 +260,7 @@ position = Vector2(-324, -450)
 position = Vector2(270, -630)
 
 [node name="Player" parent="." instance=ExtResource("9_4k5bj")]
-position = Vector2(-288, 36)
+position = Vector2(-288, 54)
 
 [connection signal="requested_next" from="UI" to="." method="_on_ui_requested_next"]
 [connection signal="requested_quit" from="UI" to="." method="_on_ui_requested_quit"]

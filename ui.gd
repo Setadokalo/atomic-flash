@@ -18,6 +18,9 @@ func _ready() -> void:
 	%GameOverText.visible_ratio = 0.0
 	$GameOverFlash.visible = false
 	%GameOverButtonClip.custom_minimum_size = Vector2.ZERO
+	%RetryButton.disabled = true
+	%NextButton.disabled = true
+	%QuitButton.disabled = true
 	Globals.game_state_changed.connect(on_game_state_changed)
 	Globals.player.respawned.connect(func():
 		$RestartTip.visible = true
@@ -36,20 +39,31 @@ func on_game_state_changed() -> void:
 		$GameOverFlash.color = Color(1.0, 1.0, 1.0, 0.0)
 		tween.tween_property($GameOverFlash, "color", Color(1.0, 1.0, 1.0, 1.0), 0.0625)
 		tween.tween_property($GameOverFlash, "color", Color(1.0, 1.0, 1.0, 0.0), 1.0).set_delay(1.0)
-		tween.tween_property(%GameOverText, "visible_ratio", 1.0, 2.0)
+		tween.tween_callback(func():
+			%RetryButton.disabled = false
+			%QuitButton.disabled = false
+		)
+		tween.tween_property(%GameOverButtonClip, "custom_minimum_size", Vector2(0.0, 32.0), 0.5)
+		tween.parallel().tween_property(%GameOverText, "visible_ratio", 1.0, 2.0)
 		tween.tween_callback(func(): $GameOverFlash.color = Color("#00000000"))
 		tween.tween_property($GameOverFlash, "color", Color("#000000FF"), 2.0).set_delay(1.0)
-		tween.parallel().tween_property(%GameOverButtonClip, "custom_minimum_size", Vector2(0.0, 32.0), 0.5).set_delay(0.5)
+		%RetryButton.grab_focus()
 	
 	elif Globals.state == Globals.GameState.WIN:
 		%NextButton.visible = true
 		$GameOverFlash.visible = true
+		$GameOverFlash.color = Color("#00000000")
 		set_gameover_text("APOCALYPSE\nPREVENTED")
 		var tween = create_tween()
-		tween.tween_property(%GameOverText, "visible_ratio", 1.0, 1.0)
-		$GameOverFlash.color = Color("#00000000")
-		tween.tween_property(%GameOverButtonClip, "custom_minimum_size", Vector2(0.0, 32.0), 0.5).set_delay(1.0)
+		tween.tween_callback(func():
+			%RetryButton.disabled = false
+			%NextButton.disabled = false
+			%QuitButton.disabled = false
+		)
+		tween.tween_property(%GameOverButtonClip, "custom_minimum_size", Vector2(0.0, 32.0), 0.5)
+		tween.parallel().tween_property(%GameOverText, "visible_ratio", 1.0, 1.0)
 		tween.tween_property($GameOverFlash, "color", Color("#000000FF"), 2.0).set_delay(1.0)
+		%NextButton.grab_focus()
 
 func _process(_delta: float) -> void:
 	if Globals.state == Globals.GameState.ACTIVE:

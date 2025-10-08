@@ -2,11 +2,10 @@ class_name Bomb
 extends Actor
 
 func _ready() -> void:
-	_gravity = PhysicsServer2D.area_get_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY)
 	$AnimationPlayer.play(&"explodonate")
 
 func _physics_process(delta: float) -> void:
-	velocity.y += _gravity * delta
+	velocity += get_gravity() * delta
 	velocity.x = lerp(0.0, velocity.x, pow(0.5, delta * 2.0))
 	var collision = move_and_collide(velocity * delta)
 	if collision:

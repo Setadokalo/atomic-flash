@@ -21,7 +21,6 @@ var _panic_cooldown := INF
 func _ready() -> void:
 	super._ready()
 	can_fly = true
-	_gravity = 0.0
 	$FlyPlayer.play("base_fly")
 	state = State.INACTIVE
 
@@ -39,7 +38,8 @@ func get_nearest_angle() -> float:
 			nearest_angle = angle
 	return nearest_angle
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	super._process(delta)
 	var angle = get_nearest_angle()
 	if angle < PI / 2.0:
 		$GunSprite.flip_h = false

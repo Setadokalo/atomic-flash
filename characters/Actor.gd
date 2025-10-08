@@ -27,14 +27,14 @@ var allow_player_damage := true
 var health := 1
 
 @export var can_fly := false
+## Fraction of gravity that applies when flying enemy is hit. 0 means no gravity at all, 1 means full strength gravity.
+@export_range(0.0, 1.0, 0.01) var flying_gravity_when_hit := 1.0
 
 @export_range(0.0, 10.0)
 var post_hit_invulnerability := 0.0
 
 var state = State.NORMAL
 var state_transition_tween: Tween
-
-var _gravity := 0.0
 
 var _air_time := 0.0
 var _jump_boost := 0.0
@@ -45,13 +45,19 @@ var _invulnerability := 0.0
 func _ready() -> void:
 	state_transition_tween = create_tween()
 	state_transition_tween.stop()
-	_gravity = PhysicsServer2D.area_get_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY)
+
+func _process(delta: float) -> void:
+	if not can_fly:
+		rotation = lerp_angle(-get_gravity().angle_to(Vector2.DOWN), rotation, pow(0.5, delta * 90.0))
 
 func _physics_process(delta: float) -> void:
+	if not get_gravity().is_zero_approx():
+		up_direction = -get_gravity().normalized()
 	_invulnerability -= delta
 	var temp_velocity := velocity
 	if not can_fly or state == State.HIT:
-		temp_velocity.y += _gravity * delta
+		temp_velocity += get_gravity() * delta * (flying_gravity_when_hit if can_fly else 1.0)
+	temp_velocity = temp_velocity.rotated(-rotation)
 	if state == State.NORMAL:
 		var desire := get_desired_movement()
 		temp_velocity.x = lerpf(desire.x * movement_speed, temp_velocity.x, pow(0.5, delta * 10.0))
@@ -61,6 +67,7 @@ func _physics_process(delta: float) -> void:
 			temp_velocity.y = lerpf(desire.y * movement_speed, temp_velocity.y, pow(0.5, delta * 10.0))
 	if state == State.HIT or state == State.DYING:
 		temp_velocity.x = lerpf(0.0, temp_velocity.x, pow(0.5, delta * 10.0))
+	temp_velocity = temp_velocity.rotated(rotation)
 	# Apply half of delta-v before update then the other half after
 	var deltav := temp_velocity - velocity
 	velocity += deltav * 0.5
